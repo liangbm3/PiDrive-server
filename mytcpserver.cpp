@@ -21,6 +21,7 @@ void MyTcpServer::incomingConnection(qintptr socketDescriptor)
 
 void MyTcpServer::deleteSocket(MyTcpSocket *mysocket)
 {
+    qDebug()<<"enter deleteSocket";
     QList<MyTcpSocket*>::Iterator iter=m_tcpSocketList.begin();
     for(;iter !=m_tcpSocketList.end();iter++)
     {

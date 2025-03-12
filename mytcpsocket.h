@@ -12,6 +12,8 @@ public:
     {
         return m_strName;
     }
+    PDU* handleRegistRequest(PDU* pdu);
+    PDU* handleLoginRequest(PDU* pdu);
 
 signals:
     void offline(MyTcpSocket *my_socket);

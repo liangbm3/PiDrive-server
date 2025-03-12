@@ -83,6 +83,7 @@ bool OperateDB::handleLogin(const char *name, const char *pwd)
 
 bool OperateDB::handleOffline(const char *name)
 {
+    qDebug()<<"enter handleOffline";
     if(NULL==name)
     {
         qDebug()<<"name is NULL";
@@ -90,7 +91,17 @@ bool OperateDB::handleOffline(const char *name)
     }
     QString strQuery =QString("update usrinfo set online=0 "
                            "where name='%1'").arg(name);
-    QSqlQuery query;
-    return query.exec(strQuery);
+    qDebug()<<strQuery;
+    QSqlQuery query(strQuery);
+    bool result=query.exec(strQuery);
+    if(result)
+    {
+        qDebug()<<"sucess";
+    }
+    else
+    {
+        qDebug()<<"fail";
+    }
+    return result;
 }
 

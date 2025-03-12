@@ -5,8 +5,8 @@
 MyTcpSocket::MyTcpSocket(QObject *parent)
     : QTcpSocket{parent}
 {
-    connect(this,SIGNAL(readyRead()),this,SLOT(recvMsg()));
-    connect(this,SIGNAL(disconnected()),this,SLOT(clientOffline()));
+    connect(this,SIGNAL(readyRead()),this,SLOT(recvMsg()));//如果收到客户端发的消息则去处理
+    connect(this,SIGNAL(disconnected()),this,SLOT(clientOffline()));//如果socket断开连接则去处理下线
 }
 
 void MyTcpSocket::recvMsg()
@@ -46,7 +46,7 @@ void MyTcpSocket::clientOffline()
     emit offline(this);
 }
 
-PDU* handleRegistRequest(PDU* pdu)
+PDU* MyTcpSocket::handleRegistRequest(PDU* pdu)
 {
     char caName[32]={'\0'};
     char caPwd[32]={'\0'};
@@ -67,7 +67,7 @@ PDU* handleRegistRequest(PDU* pdu)
     return respdu;
 }
 
-PDU* handleLoginRequest(PDU* pdu)
+PDU* MyTcpSocket::handleLoginRequest(PDU* pdu)
 {
     char caName[32]={'\0'};
     char caPwd[32]={'\0'};
@@ -81,6 +81,7 @@ PDU* handleLoginRequest(PDU* pdu)
     if(ret)
     {
         strcpy(respdu->caFileData,LOGIN_OK);
+        m_strName=caName;
     }
     else
     {
